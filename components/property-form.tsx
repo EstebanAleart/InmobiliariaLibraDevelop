@@ -3,7 +3,9 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
+import Swal from "sweetalert2"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -25,6 +27,7 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
   const [services, setServices] = useState<Service[]>([])
   const [newService, setNewService] = useState("")
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
+  const [customServices, setCustomServices] = useState<string[]>([])
 
   const [formData, setFormData] = useState({
     title: property?.title || "",
@@ -34,6 +37,7 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
     expenses: property?.expenses || 0,
     rooms: property?.rooms || [{ title: "", description: "" }],
     service_ids: property?.services.map((s) => s.id) || [],
+    custom_services: [] as string[],
     images: property?.images || [],
   })
 
@@ -41,6 +45,13 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
     fetchServices()
     if (property?.images) {
       setImagePreviews(property.images.map((img) => img.cloudinary_url))
+    }
+    if (property?.custom_services) {
+      setCustomServices(property.custom_services)
+      setFormData((prev) => ({
+        ...prev,
+        custom_services: property.custom_services || [],
+      }))
     }
   }, [])
 
@@ -66,28 +77,25 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
 
     setUploading(true)
     try {
-      const newPreviews: string[] = []
-      Array.from(files).forEach((file) => {
-        const previewUrl = URL.createObjectURL(file)
-        newPreviews.push(previewUrl)
-      })
-      setImagePreviews((prev) => [...prev, ...newPreviews])
-
+      // Primero subir a Cloudinary
       const uploadPromises = Array.from(files).map(async (file) => {
-        const formData = new FormData()
-        formData.append("file", file)
+        const uploadFormData = new FormData()
+        uploadFormData.append("file", file)
 
         const response = await fetch("/api/upload", {
           method: "POST",
-          body: formData,
+          body: uploadFormData,
         })
 
         if (!response.ok) {
           const error = await response.json()
+          console.error("Upload error response:", error)
           throw new Error(error.error || "Failed to upload image")
         }
 
-        return await response.json()
+        const result = await response.json()
+        console.log("Upload success:", result)
+        return result
       })
 
       const results = await Promise.all(uploadPromises)
@@ -95,33 +103,28 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
       const newImages = results.map((result) => ({
         cloudinary_url: result.secure_url,
         cloudinary_public_id: result.public_id,
+        display_order: 0,
       }))
 
+      // Actualizar el estado con las nuevas imágenes
       setFormData((prev) => ({
         ...prev,
         images: [...prev.images, ...newImages],
       }))
 
-      setImagePreviews((prev) => {
-        const oldPreviews = prev.slice(0, prev.length - newPreviews.length)
-        newPreviews.forEach((url) => URL.revokeObjectURL(url))
-        return [...oldPreviews, ...newImages.map((img) => img.cloudinary_url)]
-      })
+      // Actualizar las previsualizaciones con las URLs de Cloudinary
+      setImagePreviews((prev) => [...prev, ...newImages.map((img) => img.cloudinary_url)])
     } catch (error) {
       console.error("Error uploading images:", error)
       alert(`Error al subir imágenes: ${error instanceof Error ? error.message : "Error desconocido"}`)
-      setImagePreviews((prev) => prev.slice(0, formData.images.length))
     } finally {
       setUploading(false)
+      // Limpiar el input para permitir subir el mismo archivo nuevamente
+      e.target.value = ""
     }
   }
 
   const removeImage = (index: number) => {
-    const preview = imagePreviews[index]
-    if (preview?.startsWith("blob:")) {
-      URL.revokeObjectURL(preview)
-    }
-
     setFormData((prev) => ({
       ...prev,
       images: prev.images.filter((_, i) => i !== index),
@@ -159,28 +162,16 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
     }))
   }
 
-  const handleAddService = async () => {
+  const handleAddService = () => {
     if (!newService.trim()) return
 
-    try {
-      const response = await fetch("/api/services", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: newService }),
-      })
-
-      if (response.ok) {
-        const service = await response.json()
-        setServices((prev) => [...prev, service])
-        setFormData((prev) => ({
-          ...prev,
-          service_ids: [...prev.service_ids, service.id],
-        }))
-        setNewService("")
-      }
-    } catch (error) {
-      console.error("[v0] Error adding service:", error)
-    }
+    // Add to custom services (not saved to global services DB)
+    setCustomServices((prev) => [...prev, newService.trim()])
+    setFormData((prev) => ({
+      ...prev,
+      custom_services: [...prev.custom_services, newService.trim()],
+    }))
+    setNewService("")
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -198,17 +189,38 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
       })
 
       if (response.ok) {
+        await Swal.fire({
+          icon: "success",
+          title: property ? "¡Propiedad actualizada!" : "¡Propiedad creada!",
+          text: property ? "La propiedad se actualizó correctamente" : "La propiedad se creó correctamente",
+          confirmButtonText: "Ver propiedades",
+          confirmButtonColor: "#10b981",
+        })
+        
         if (onSubmit) {
           onSubmit()
         } else {
-          router.push("/admin")
+          router.push("/propiedades")
         }
       } else {
-        alert("Error al guardar la propiedad")
+        const errorData = await response.json()
+        await Swal.fire({
+          icon: "error",
+          title: "Error al guardar",
+          text: errorData.error || "No se pudo guardar la propiedad. Intenta nuevamente.",
+          confirmButtonText: "Entendido",
+          confirmButtonColor: "#ef4444",
+        })
       }
     } catch (error) {
       console.error("[v0] Error submitting property:", error)
-      alert("Error al guardar la propiedad")
+      await Swal.fire({
+        icon: "error",
+        title: "Error inesperado",
+        text: "Ocurrió un error al guardar la propiedad. Verifica tu conexión e intenta nuevamente.",
+        confirmButtonText: "Entendido",
+        confirmButtonColor: "#ef4444",
+      })
     } finally {
       setLoading(false)
     }
@@ -420,6 +432,32 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
               <Plus className="h-4 w-4" />
             </Button>
           </div>
+
+          {customServices.length > 0 && (
+            <div className="border-t pt-4">
+              <p className="text-sm text-muted-foreground mb-3">Servicios personalizados:</p>
+              <div className="flex flex-wrap gap-2">
+                {customServices.map((service, index) => (
+                  <Badge key={index} variant="secondary" className="gap-2 py-2 px-3">
+                    {service}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCustomServices((prev) => prev.filter((_, i) => i !== index))
+                        setFormData((prev) => ({
+                          ...prev,
+                          custom_services: prev.custom_services.filter((_, i) => i !== index),
+                        }))
+                      }}
+                      className="hover:text-destructive"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 

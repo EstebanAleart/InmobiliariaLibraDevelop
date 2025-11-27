@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    unoptimized: true,
+  // Explicitly set Turbopack root to this project to avoid wrong root inference
+  turbopack: {
+    root: ".",
   },
 }
 

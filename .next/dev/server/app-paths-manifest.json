@@ -1,7 +1,4 @@
 {
-  "/api/properties/[id]/pdf/route": "app/api/properties/[id]/pdf/route.js",
-  "/page": "app/page.js",
-  "/propiedades/[id]/contrato/page": "app/propiedades/[id]/contrato/page.js",
   "/propiedades/[id]/page": "app/propiedades/[id]/page.js",
   "/propiedades/page": "app/propiedades/page.js"
 }

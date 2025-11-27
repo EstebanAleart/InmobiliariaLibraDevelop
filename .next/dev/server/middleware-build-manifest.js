@@ -4,20 +4,20 @@ globalThis.__BUILD_MANIFEST = {
   },
   "devFiles": [],
   "polyfillFiles": [
-    "static/chunks/c1eb3_next_dist_build_polyfills_polyfill-nomodule.js"
+    "static/chunks/node_modules_next_dist_build_polyfills_polyfill-nomodule.js"
   ],
   "lowPriorityFiles": [],
   "rootMainFiles": [
-    "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_81a3ede6._.js",
-    "static/chunks/c1eb3_next_dist_compiled_react-dom_9fdddd46._.js",
-    "static/chunks/c1eb3_next_dist_compiled_react-server-dom-turbopack_33cadb11._.js",
-    "static/chunks/c1eb3_next_dist_compiled_next-devtools_index_324bab14.js",
-    "static/chunks/c1eb3_next_dist_compiled_5eb7fd20._.js",
-    "static/chunks/c1eb3_next_dist_client_64a6cd40._.js",
-    "static/chunks/c1eb3_next_dist_f922bc1f._.js",
-    "static/chunks/c1eb3_@swc_helpers_cjs_ac4f0ee6._.js",
-    "static/chunks/proyectos_InmobiliariaLibra_a0ff3932._.js",
-    "static/chunks/turbopack-proyectos_InmobiliariaLibra_af5d623b._.js"
+    "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_bae88007._.js",
+    "static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js",
+    "static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js",
+    "static/chunks/node_modules_next_dist_compiled_next-devtools_index_1dd7fb59.js",
+    "static/chunks/node_modules_next_dist_compiled_a0e4c7b4._.js",
+    "static/chunks/node_modules_next_dist_client_aaee43fe._.js",
+    "static/chunks/node_modules_next_dist_7a8122d0._.js",
+    "static/chunks/node_modules_@swc_helpers_cjs_d80fb378._.js",
+    "static/chunks/_a0ff3932._.js",
+    "static/chunks/turbopack-_45210fd5._.js"
   ]
 };
 globalThis.__BUILD_MANIFEST.lowPriorityFiles = [

@@ -2,10 +2,11 @@ import { sql } from "@/lib/db"
 import type { Property, PropertyWithDetails } from "@/lib/types"
 import { ImageGallery } from "@/components/image-gallery"
 import { Button } from "@/components/ui/button"
+import { DeletePropertyButton } from "@/components/delete-property-button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Building2, Maximize2, FileText, ArrowLeft, Calendar, Shield } from "lucide-react"
+import { Building2, Maximize2, FileText, ArrowLeft, Calendar, Shield, Edit } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
@@ -65,12 +66,27 @@ export default async function PropertyDetailPage({
       {/* Header */}
       <header className="border-b border-border bg-card sticky top-0 z-10 backdrop-blur-sm bg-card/95">
         <div className="container mx-auto px-4 py-4">
-          <Link href="/propiedades">
-            <Button variant="ghost" className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Volver a propiedades
-            </Button>
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link href="/propiedades">
+              <Button variant="ghost" className="gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Volver a propiedades
+              </Button>
+            </Link>
+            <div className="flex gap-2">
+              <Link href={`/admin/propiedades/${id}/editar`}>
+                <Button variant="outline" className="gap-2">
+                  <Edit className="h-4 w-4" />
+                  Editar
+                </Button>
+              </Link>
+              <DeletePropertyButton
+                propertyId={Number(id)}
+                propertyTitle={property.title}
+                variant="destructive"
+              />
+            </div>
+          </div>
         </div>
       </header>
 
@@ -126,7 +142,7 @@ export default async function PropertyDetailPage({
               )}
 
               {/* Services */}
-              {property.services.length > 0 && (
+              {(property.services.length > 0 || (property.custom_services && property.custom_services.length > 0)) && (
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg md:text-xl">Servicios Incluidos</CardTitle>
@@ -136,6 +152,11 @@ export default async function PropertyDetailPage({
                       {property.services.map((service) => (
                         <Badge key={service.id} variant="outline" className="py-2 px-3 md:px-4 text-xs md:text-sm">
                           {service.name}
+                        </Badge>
+                      ))}
+                      {property.custom_services?.map((service, index) => (
+                        <Badge key={`custom-${index}`} variant="secondary" className="py-2 px-3 md:px-4 text-xs md:text-sm">
+                          {service}
                         </Badge>
                       ))}
                     </div>
@@ -168,19 +189,6 @@ export default async function PropertyDetailPage({
                       </div>
                     </>
                   )}
-
-                  <Separator />
-
-                  <div className="bg-muted p-4 rounded-lg">
-                    <p className="text-sm md:text-base font-medium mb-2">Total Mensual</p>
-                    <p className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-                      ${(property.rental_price + property.expenses).toLocaleString("es-AR")}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3 inline mr-1" />
-                      Actualización trimestral por IPC
-                    </p>
-                  </div>
 
                   <Link href={`/propiedades/${id}/contrato`} target="_blank">
                     <Button className="w-full gap-2" size="lg">

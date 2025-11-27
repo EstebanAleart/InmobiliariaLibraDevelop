@@ -3,7 +3,7 @@ import type { PropertyWithDetails, Property } from "@/lib/types"
 import { PropertyCard } from "@/components/property-card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { Building2, Plus, Settings } from "lucide-react"
+import { Building2, Plus } from "lucide-react"
 
 async function getProperties(): Promise<PropertyWithDetails[]> {
   try {
@@ -42,42 +42,38 @@ async function getProperties(): Promise<PropertyWithDetails[]> {
     return propertiesWithDetails
   } catch (error) {
     console.error("[v0] Error fetching properties:", error)
-    console.log(
-      "Database connection failed. Make sure PostgreSQL is running and InmobiliariaLibra database exists.",
-    )
     return []
   }
 }
 
-export default async function PropiedadesPage() {
+export default async function AdminPropertiesPage() {
   const properties = await getProperties()
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card sticky top-0 z-10 backdrop-blur-sm bg-card/95">
+      <header className="border-b border-border bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-3 md:py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
             <div className="flex items-center gap-2 md:gap-3 flex-1">
               <Building2 className="h-6 md:h-8 w-6 md:w-8 text-primary shrink-0" />
               <div className="min-w-0 flex-1">
-                <h1 className="text-lg md:text-2xl font-bold text-foreground truncate">Propiedades en Alquiler</h1>
+                <h1 className="text-lg md:text-2xl font-bold text-foreground truncate">Panel de Administración</h1>
                 <p className="text-xs md:text-sm text-muted-foreground">
-                  {properties.length} {properties.length === 1 ? "propiedad disponible" : "propiedades disponibles"}
+                  Gestiona tus propiedades - {properties.length} {properties.length === 1 ? "propiedad" : "propiedades"}
                 </p>
               </div>
             </div>
             <div className="flex gap-2 w-full sm:w-auto">
-              <Link href="/admin/propiedades" className="w-full sm:w-auto">
-                <Button variant="outline" className="gap-2 w-full sm:w-auto" size="sm">
-                  <Settings className="h-4 w-4" />
-                  <span className="text-xs md:text-base">Vista Admin</span>
+              <Link href="/propiedades" className="flex-1 sm:flex-none">
+                <Button variant="outline" className="gap-2 w-full" size="sm">
+                  Ver sitio público
                 </Button>
               </Link>
-              <Link href="/admin" className="w-full sm:w-auto">
-                <Button className="gap-2 w-full sm:w-auto" size="sm">
+              <Link href="/admin" className="flex-1 sm:flex-none">
+                <Button className="gap-2 w-full" size="sm">
                   <Plus className="h-4 w-4" />
-                  <span className="text-xs md:text-base">Nueva Propiedad</span>
+                  Nueva Propiedad
                 </Button>
               </Link>
             </div>
@@ -90,7 +86,7 @@ export default async function PropiedadesPage() {
         {properties.length === 0 ? (
           <div className="text-center py-12 md:py-20">
             <Building2 className="h-12 md:h-16 w-12 md:w-16 text-muted-foreground mx-auto mb-4" />
-            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">No hay propiedades disponibles</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">No hay propiedades cargadas</h2>
             <p className="text-sm md:text-base text-muted-foreground mb-6">Comienza agregando tu primera propiedad en alquiler</p>
             <Link href="/admin">
               <Button size="lg" className="gap-2">
@@ -102,18 +98,11 @@ export default async function PropiedadesPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {properties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
+              <PropertyCard key={property.id} property={property} showActions={true} />
             ))}
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-border mt-12 md:mt-20 py-6 md:py-8">
-        <div className="container mx-auto px-4 text-center text-muted-foreground text-xs md:text-sm">
-          <p>Plataforma de Gestión de Alquileres - Demo</p>
-        </div>
-      </footer>
     </div>
   )
 }

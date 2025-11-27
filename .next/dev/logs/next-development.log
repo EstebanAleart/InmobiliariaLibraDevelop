@@ -1,19 +1,7 @@
-[00:00:11.913] Server  LOG      ✓ Ready in 8.7s
-[00:00:17.841] Server  LOG      ○ Compiling / ...
-[00:00:40.007] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:40.709] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:40.709] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/propiedades","route":"/propiedades"}
-[00:00:40.709] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades","o":"http://localhost:3000/propiedades","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764111915369}
-[00:01:04.969] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades/1 color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades/[id]","o":"http://localhost:3000/propiedades/1","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764111939789}
-[00:01:40.983] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:41.356] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:01:41.356] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/propiedades/1/contrato","route":"/propiedades/[id]/contrato"}
-[00:01:41.356] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades/1/contrato color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades/[id]/contrato","o":"http://localhost:3000/propiedades/1/contrato","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764111976227}
-[00:04:37.034] Server  LOG      ✓ Compiled in 850ms
-[00:04:48.216] Server  LOG      ✓ Compiled in 1703ms
-[00:04:56.998] Server  LOG      ✓ Compiled in 1004ms
-[00:05:00.434] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:01.546] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:05:01.546] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/propiedades/1","route":"/propiedades/[id]"}
-[00:05:01.546] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades/1 color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades/[id]","o":"http://localhost:3000/propiedades/1","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764112176477}
-[00:05:07.051] Server  LOG      ✓ Compiled in 405ms
+[00:00:04.628] Server  LOG      ✓ Ready in 2.4s
+[00:00:07.695] Server  LOG      ○ Compiling /propiedades ...
+[00:00:12.687] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades","o":"http://localhost:3000/propiedades","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764247770671}
+[00:00:15.336] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:15.804] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:15.804] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/propiedades/1","route":"/propiedades/[id]"}
+[00:00:15.804] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades/1 color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades/[id]","o":"http://localhost:3000/propiedades/1","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764247773724}

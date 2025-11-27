@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS properties (
   square_meters DECIMAL(10, 2) NOT NULL,
   rental_price DECIMAL(10, 2) NOT NULL,
   expenses DECIMAL(10, 2),
+  custom_services TEXT[] DEFAULT '{}',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server"
-import crypto from "crypto"
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,11 +10,13 @@ export async function POST(request: NextRequest) {
     }
 
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-    const apiKey = process.env.CLOUDINARY_API_KEY
-    const apiSecret = process.env.CLOUDINARY_API_SECRET
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
 
-    if (!cloudName || !apiKey || !apiSecret) {
-      return NextResponse.json({ error: "Cloudinary credentials not configured" }, { status: 500 })
+    if (!cloudName) {
+      return NextResponse.json({ error: "Cloudinary cloud name not configured" }, { status: 500 })
+    }
+    if (!uploadPreset) {
+      return NextResponse.json({ error: "Cloudinary upload preset not configured" }, { status: 500 })
     }
 
     // Convert file to base64
@@ -23,19 +24,13 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes)
     const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`
 
-    // Create signature for signed upload
-    const timestamp = Math.round(new Date().getTime() / 1000)
+    // Use unsigned upload via preset
     const folder = "rental-properties"
-
-    const signatureString = `folder=${folder}&timestamp=${timestamp}${apiSecret}`
-    const signature = crypto.createHash("sha1").update(signatureString).digest("hex")
 
     // Prepare form data for Cloudinary
     const cloudinaryFormData = new FormData()
     cloudinaryFormData.append("file", base64Image)
-    cloudinaryFormData.append("api_key", apiKey)
-    cloudinaryFormData.append("timestamp", timestamp.toString())
-    cloudinaryFormData.append("signature", signature)
+    cloudinaryFormData.append("upload_preset", uploadPreset)
     cloudinaryFormData.append("folder", folder)
 
     const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
