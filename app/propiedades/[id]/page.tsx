@@ -2,6 +2,7 @@ import { sql } from "@/lib/db"
 import type { Property, PropertyWithDetails } from "@/lib/types"
 import { ImageGallery } from "@/components/image-gallery"
 import { Button } from "@/components/ui/button"
+import { DeletePropertyButton } from "@/components/delete-property-button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -72,12 +73,19 @@ export default async function PropertyDetailPage({
                 Volver a propiedades
               </Button>
             </Link>
-            <Link href={`/admin/propiedades/${id}/editar`}>
-              <Button variant="outline" className="gap-2">
-                <Edit className="h-4 w-4" />
-                Editar
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+              <Link href={`/admin/propiedades/${id}/editar`}>
+                <Button variant="outline" className="gap-2">
+                  <Edit className="h-4 w-4" />
+                  Editar
+                </Button>
+              </Link>
+              <DeletePropertyButton
+                propertyId={Number(id)}
+                propertyTitle={property.title}
+                variant="destructive"
+              />
+            </div>
           </div>
         </div>
       </header>
@@ -134,7 +142,7 @@ export default async function PropertyDetailPage({
               )}
 
               {/* Services */}
-              {property.services.length > 0 && (
+              {(property.services.length > 0 || (property.custom_services && property.custom_services.length > 0)) && (
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg md:text-xl">Servicios Incluidos</CardTitle>
@@ -144,6 +152,11 @@ export default async function PropertyDetailPage({
                       {property.services.map((service) => (
                         <Badge key={service.id} variant="outline" className="py-2 px-3 md:px-4 text-xs md:text-sm">
                           {service.name}
+                        </Badge>
+                      ))}
+                      {property.custom_services?.map((service, index) => (
+                        <Badge key={`custom-${index}`} variant="secondary" className="py-2 px-3 md:px-4 text-xs md:text-sm">
+                          {service}
                         </Badge>
                       ))}
                     </div>

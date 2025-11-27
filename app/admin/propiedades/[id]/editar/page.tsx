@@ -2,6 +2,7 @@ import { sql } from "@/lib/db"
 import type { Property, PropertyWithDetails } from "@/lib/types"
 import { PropertyForm } from "@/components/property-form"
 import { Button } from "@/components/ui/button"
+import { DeletePropertyButton } from "@/components/delete-property-button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -61,12 +62,19 @@ export default async function EditPropertyPage({
     <div className="min-h-screen bg-background">
       <div className="container mx-auto py-8 px-4">
         <div className="mb-8">
-          <Link href="/propiedades">
-            <Button variant="ghost" className="gap-2 mb-4">
-              <ArrowLeft className="h-4 w-4" />
-              Volver a propiedades
-            </Button>
-          </Link>
+          <div className="flex items-start justify-between mb-4">
+            <Link href="/propiedades">
+              <Button variant="ghost" className="gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Volver a propiedades
+              </Button>
+            </Link>
+            <DeletePropertyButton
+              propertyId={Number(id)}
+              propertyTitle={property.title}
+              variant="outline"
+            />
+          </div>
           <h1 className="text-4xl font-bold text-foreground mb-2">Editar Propiedad</h1>
           <p className="text-muted-foreground">Actualiza la información de la propiedad en alquiler</p>
         </div>

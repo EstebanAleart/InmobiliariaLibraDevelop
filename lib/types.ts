@@ -5,6 +5,7 @@ export interface Property {
   square_meters: number
   rental_price: number
   expenses: number
+  custom_services?: string[]
   created_at: string
   updated_at: string
 }

@@ -51,12 +51,12 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { title, description, square_meters, rental_price, expenses, rooms, service_ids, images } = body
+    const { title, description, square_meters, rental_price, expenses, rooms, service_ids, custom_services, images } = body
 
     // Create property
     const [property] = await sql<Property[]>`
-      INSERT INTO properties (title, description, square_meters, rental_price, expenses)
-      VALUES (${title}, ${description}, ${square_meters}, ${rental_price}, ${expenses})
+      INSERT INTO properties (title, description, square_meters, rental_price, expenses, custom_services)
+      VALUES (${title}, ${description}, ${square_meters}, ${rental_price}, ${expenses}, ${custom_services || []})
       RETURNING *
     `
 

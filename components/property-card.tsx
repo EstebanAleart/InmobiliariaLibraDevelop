@@ -4,6 +4,7 @@ import type { PropertyWithDetails } from "@/lib/types"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { DeletePropertyButton } from "@/components/delete-property-button"
 import { MapPin, Maximize2, Edit } from "lucide-react"
 import Link from "next/link"
 
@@ -65,18 +66,23 @@ export function PropertyCard({ property, showActions = false }: PropertyCardProp
             </div>
           </div>
 
-          {property.services.length > 0 && (
+          {(property.services.length > 0 || (property.custom_services && property.custom_services.length > 0)) && (
             <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-border">
               <p className="text-xs text-muted-foreground mb-2">Servicios</p>
               <div className="flex flex-wrap gap-1">
-                {property.services.slice(0, 3).map((service) => (
+                {property.services.slice(0, 2).map((service) => (
                   <span key={service.id} className="text-xs bg-accent text-accent-foreground px-2 py-1 rounded">
                     {service.name}
                   </span>
                 ))}
-                {property.services.length > 3 && (
+                {property.custom_services?.slice(0, 3 - property.services.slice(0, 2).length).map((service, index) => (
+                  <span key={`custom-${index}`} className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded">
+                    {service}
+                  </span>
+                ))}
+                {(property.services.length + (property.custom_services?.length || 0)) > 3 && (
                   <span className="text-xs bg-accent text-accent-foreground px-2 py-1 rounded">
-                    +{property.services.length - 3}
+                    +{property.services.length + (property.custom_services?.length || 0) - 3}
                   </span>
                 )}
               </div>
@@ -84,18 +90,27 @@ export function PropertyCard({ property, showActions = false }: PropertyCardProp
           )}
 
           {showActions && (
-            <div className="mt-4 pt-4 border-t border-border flex gap-2">
-              <Link href={`/admin/propiedades/${property.id}/editar`} className="flex-1">
-                <Button variant="outline" className="w-full gap-2" size="sm">
-                  <Edit className="h-4 w-4" />
-                  Editar
-                </Button>
-              </Link>
-              <Link href={`/propiedades/${property.id}`} className="flex-1">
-                <Button variant="default" className="w-full" size="sm">
-                  Ver
-                </Button>
-              </Link>
+            <div className="mt-4 pt-4 border-t border-border space-y-2">
+              <div className="flex gap-2">
+                <Link href={`/admin/propiedades/${property.id}/editar`} className="flex-1">
+                  <Button variant="outline" className="w-full gap-2" size="sm">
+                    <Edit className="h-4 w-4" />
+                    Editar
+                  </Button>
+                </Link>
+                <Link href={`/propiedades/${property.id}`} className="flex-1">
+                  <Button variant="default" className="w-full" size="sm">
+                    Ver
+                  </Button>
+                </Link>
+              </div>
+              <DeletePropertyButton
+                propertyId={property.id}
+                propertyTitle={property.title}
+                variant="destructive"
+                size="sm"
+                className="w-full"
+              />
             </div>
           )}
         </CardContent>

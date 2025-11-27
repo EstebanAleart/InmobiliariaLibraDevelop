@@ -54,7 +54,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
     const { id } = await params
     const body = await request.json()
-    const { title, description, square_meters, rental_price, expenses, rooms, service_ids, images } = body
+    const { title, description, square_meters, rental_price, expenses, rooms, service_ids, custom_services, images } = body
 
     // Update property
     await sql`
@@ -64,6 +64,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
           square_meters = ${square_meters},
           rental_price = ${rental_price},
           expenses = ${expenses},
+          custom_services = ${custom_services || []},
           updated_at = CURRENT_TIMESTAMP
       WHERE id = ${id}
     `

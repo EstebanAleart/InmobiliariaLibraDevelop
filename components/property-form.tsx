@@ -5,6 +5,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import Swal from "sweetalert2"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -26,6 +27,7 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
   const [services, setServices] = useState<Service[]>([])
   const [newService, setNewService] = useState("")
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
+  const [customServices, setCustomServices] = useState<string[]>([])
 
   const [formData, setFormData] = useState({
     title: property?.title || "",
@@ -35,6 +37,7 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
     expenses: property?.expenses || 0,
     rooms: property?.rooms || [{ title: "", description: "" }],
     service_ids: property?.services.map((s) => s.id) || [],
+    custom_services: [] as string[],
     images: property?.images || [],
   })
 
@@ -42,6 +45,13 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
     fetchServices()
     if (property?.images) {
       setImagePreviews(property.images.map((img) => img.cloudinary_url))
+    }
+    if (property?.custom_services) {
+      setCustomServices(property.custom_services)
+      setFormData((prev) => ({
+        ...prev,
+        custom_services: property.custom_services || [],
+      }))
     }
   }, [])
 
@@ -152,28 +162,16 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
     }))
   }
 
-  const handleAddService = async () => {
+  const handleAddService = () => {
     if (!newService.trim()) return
 
-    try {
-      const response = await fetch("/api/services", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: newService }),
-      })
-
-      if (response.ok) {
-        const service = await response.json()
-        setServices((prev) => [...prev, service])
-        setFormData((prev) => ({
-          ...prev,
-          service_ids: [...prev.service_ids, service.id],
-        }))
-        setNewService("")
-      }
-    } catch (error) {
-      console.error("[v0] Error adding service:", error)
-    }
+    // Add to custom services (not saved to global services DB)
+    setCustomServices((prev) => [...prev, newService.trim()])
+    setFormData((prev) => ({
+      ...prev,
+      custom_services: [...prev.custom_services, newService.trim()],
+    }))
+    setNewService("")
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -434,6 +432,32 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
               <Plus className="h-4 w-4" />
             </Button>
           </div>
+
+          {customServices.length > 0 && (
+            <div className="border-t pt-4">
+              <p className="text-sm text-muted-foreground mb-3">Servicios personalizados:</p>
+              <div className="flex flex-wrap gap-2">
+                {customServices.map((service, index) => (
+                  <Badge key={index} variant="secondary" className="gap-2 py-2 px-3">
+                    {service}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCustomServices((prev) => prev.filter((_, i) => i !== index))
+                        setFormData((prev) => ({
+                          ...prev,
+                          custom_services: prev.custom_services.filter((_, i) => i !== index),
+                        }))
+                      }}
+                      className="hover:text-destructive"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
