@@ -1730,10 +1730,6 @@
     gap: calc(var(--spacing) * 7);
   }
 
-  .gap-8 {
-    gap: calc(var(--spacing) * 8);
-  }
-
   :where(.space-y-3 > :not(:last-child)) {
     --tw-space-y-reverse: 0;
     margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
@@ -4896,36 +4892,6 @@
     .md\:after\:hidden:after {
       content: var(--tw-content);
       display: none;
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .lg\:sticky {
-      position: sticky;
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .lg\:top-24 {
-      top: calc(var(--spacing) * 24);
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .lg\:col-span-1 {
-      grid-column: span 1 / span 1;
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .lg\:col-span-2 {
-      grid-column: span 2 / span 2;
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .lg\:h-\[600px\] {
-      height: 600px;
     }
   }
 

@@ -2,5 +2,5 @@
   "version": 3,
   "sources": [],
   "sections": [
-    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Esteban/Desktop/proyectos/InmobiliariaLibra/app/page.tsx"],"sourcesContent":["import { redirect } from \"next/navigation\"\n\nexport default function HomePage() {\n  redirect(\"/propiedades\")\n}\n"],"names":[],"mappings":";;;;AAAA;AAAA;;AAEe,SAAS;IACtB,IAAA,mOAAQ,EAAC;AACX"}}]
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Esteban/Desktop/proyectos/InmobiliariaLibra/app/page.tsx"],"sourcesContent":["import { redirect } from \"next/navigation\"\r\n\r\nexport default function HomePage() {\r\n  redirect(\"/propiedades\")\r\n}\r\n"],"names":[],"mappings":";;;;AAAA;AAAA;;AAEe,SAAS;IACtB,IAAA,mOAAQ,EAAC;AACX"}}]
 }
