@@ -17,8 +17,8 @@ async function getProperty(id: string): Promise<PropertyWithDetails | null> {
     const propertyRows = await sql<Property[]>`
       SELECT * FROM properties WHERE id = ${id}
     `;
-    const property = propertyRows[0];
-    if (!property) return null;
+    const propertyObj = Array.isArray(propertyRows) ? propertyRows[0] : propertyRows;
+    if (!propertyObj) return null;
 
     const roomRows = await sql`
       SELECT * FROM rooms WHERE property_id = ${id}
@@ -33,18 +33,18 @@ async function getProperty(id: string): Promise<PropertyWithDetails | null> {
     `;
 
     return {
-      id: property.id,
-      title: property.title,
-      description: property.description,
-      square_meters: property.square_meters,
-      rental_price: property.rental_price,
-      expenses: property.expenses,
-      created_at: property.created_at,
-      updated_at: property.updated_at,
+      id: propertyObj.id,
+      title: propertyObj.title,
+      description: propertyObj.description,
+      square_meters: propertyObj.square_meters,
+      rental_price: propertyObj.rental_price,
+      expenses: propertyObj.expenses,
+      created_at: propertyObj.created_at,
+      updated_at: propertyObj.updated_at,
       rooms: roomRows,
       images: imageRows,
       services: serviceRows,
-      custom_services: property.custom_services ?? [],
+      custom_services: propertyObj.custom_services ?? [],
     };
 
     if (!property) {
