@@ -16,13 +16,9 @@ interface PropertyCardProps {
 export function PropertyCard({ property, showActions = false }: PropertyCardProps) {
   const mainImage = property.images[0]?.cloudinary_url || "/departamento.jpg"
 
-  const CardWrapper = showActions ? "div" : Link
-  const wrapperProps = showActions ? {} : { href: `/propiedades/${property.id}` }
-
-  return (
-    <CardWrapper {...wrapperProps}>
-      <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border-border h-full">
-        <div className="relative h-48 md:h-64 overflow-hidden">
+  const cardContent = (
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border-border h-full">
+      <div className="relative h-48 md:h-64 overflow-hidden">
           <img
             src={mainImage || "/placeholder.svg"}
             alt={property.title}
@@ -115,6 +111,11 @@ export function PropertyCard({ property, showActions = false }: PropertyCardProp
           )}
         </CardContent>
       </Card>
-    </CardWrapper>
   )
+
+  if (showActions) {
+    return cardContent
+  }
+
+  return <Link href={`/propiedades/${property.id}`}>{cardContent}</Link>
 }
