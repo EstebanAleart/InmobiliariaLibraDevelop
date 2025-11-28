@@ -14,10 +14,38 @@ async function getProperty(id: string): Promise<PropertyWithDetails | null> {
       return null
     }
 
-    const propertyArr = await sql<Property[]>`
+    const propertyRows = await sql<Property[]>`
       SELECT * FROM properties WHERE id = ${id}
-    `
-    const property = propertyArr[0]
+    `;
+    const property = propertyRows[0];
+    if (!property) return null;
+
+    const roomRows = await sql`
+      SELECT * FROM rooms WHERE property_id = ${id}
+    `;
+    const imageRows = await sql`
+      SELECT * FROM property_images WHERE property_id = ${id} ORDER BY display_order
+    `;
+    const serviceRows = await sql`
+      SELECT s.* FROM services s
+      JOIN property_services ps ON s.id = ps.service_id
+      WHERE ps.property_id = ${id}
+    `;
+
+    return {
+      id: property.id,
+      title: property.title,
+      description: property.description,
+      square_meters: property.square_meters,
+      rental_price: property.rental_price,
+      expenses: property.expenses,
+      created_at: property.created_at,
+      updated_at: property.updated_at,
+      rooms: roomRows,
+      images: imageRows,
+      services: serviceRows,
+      custom_services: property.custom_services ?? [],
+    };
 
     if (!property) {
       return null
