@@ -35,10 +35,18 @@ async function getProperty(id: string): Promise<PropertyWithDetails | null> {
     `
 
     return {
-      ...property,
+      id: property.id,
+      title: property.title,
+      description: property.description,
+      square_meters: property.square_meters,
+      rental_price: property.rental_price,
+      expenses: property.expenses,
+      created_at: property.created_at,
+      updated_at: property.updated_at,
       rooms,
       images,
       services,
+      custom_services: property.custom_services ?? [],
     } as PropertyWithDetails
   } catch (error) {
     console.error("[v0] Error fetching property:", error)
