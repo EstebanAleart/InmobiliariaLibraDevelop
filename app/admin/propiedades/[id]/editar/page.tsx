@@ -17,7 +17,7 @@ async function getProperty(id: string): Promise<PropertyWithDetails | null> {
     const propertyRows = await sql<Property[]>`
       SELECT * FROM properties WHERE id = ${id}
     `;
-    const propertyObj = Array.isArray(propertyRows) ? propertyRows[0] : propertyRows;
+    const propertyObj = (propertyRows as unknown as Property[])[0];
     if (!propertyObj) return null;
 
     const roomRows = await sql`
