@@ -9,9 +9,10 @@ export async function GET() {
       return NextResponse.json({ error: "Database not configured" }, { status: 503 })
     }
 
-    const properties = await sql<Property[]>`
+    const propertiesRows = await sql<Property[]>`
       SELECT * FROM properties ORDER BY created_at DESC
     `
+    const properties = propertiesRows as unknown as Property[]
 
     const propertiesWithDetails = await Promise.all(
       properties.map(async (property) => {
@@ -54,11 +55,12 @@ export async function POST(request: NextRequest) {
     const { title, description, square_meters, rental_price, expenses, rooms, service_ids, custom_services, images } = body
 
     // Create property
-    const [property] = await sql<Property[]>`
+    const propertyRows = await sql<Property[]>`
       INSERT INTO properties (title, description, square_meters, rental_price, expenses, custom_services)
       VALUES (${title}, ${description}, ${square_meters}, ${rental_price}, ${expenses}, ${custom_services || []})
       RETURNING *
     `
+    const property = (propertyRows as unknown as Property[])[0]
 
     // Create rooms
     if (rooms && rooms.length > 0) {
