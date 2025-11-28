@@ -6,20 +6,25 @@ import { Building2, Plus, Settings } from "lucide-react"
 
 async function getProperties(): Promise<PropertyWithDetails[]> {
   try {
-    // Use API endpoint instead of direct database access
-    const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL 
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-      : 'http://localhost:3000'
+    // Build absolute URL for API call
+    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+    const host = process.env.VERCEL_URL || 'localhost:3000'
+    const url = `${protocol}://${host}/api/properties`
     
-    const response = await fetch(`${baseUrl}/api/properties`, {
-      cache: 'no-store'
+    const response = await fetch(url, {
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json',
+      }
     })
     
     if (!response.ok) {
-      throw new Error('Failed to fetch properties')
+      console.error('[v0] API response not ok:', response.status, response.statusText)
+      throw new Error(`Failed to fetch properties: ${response.status}`)
     }
     
-    return await response.json()
+    const data = await response.json()
+    return data
   } catch (error) {
     console.error("[v0] Error fetching properties:", error)
     return []
