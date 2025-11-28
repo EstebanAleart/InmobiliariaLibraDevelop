@@ -1,6 +1,7 @@
-import type { PropertyWithDetails } from "@/lib/types"
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 import { sql } from "@/lib/db"
-import type { PropertyWithDetails, Property } from "@/lib/types"
+import type { Property, PropertyWithDetails } from "@/lib/types"
 import { PropertyCard } from "@/components/property-card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
