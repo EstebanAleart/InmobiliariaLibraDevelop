@@ -94,16 +94,18 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
         }
 
         const result = await response.json()
-        console.log("Upload success:", result)
         return result
       })
 
       const results = await Promise.all(uploadPromises)
 
-      const newImages = results.map((result) => ({
+      const newImages = results.map((result, index) => ({
+        id: 0,
+        property_id: 0,
         cloudinary_url: result.secure_url,
         cloudinary_public_id: result.public_id,
-        display_order: 0,
+        display_order: formData.images.length + index,
+        created_at: new Date().toISOString(),
       }))
 
       // Actualizar el estado con las nuevas imágenes

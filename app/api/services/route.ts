@@ -9,9 +9,10 @@ export async function GET() {
       return NextResponse.json({ error: "Database not configured" }, { status: 503 })
     }
 
-    const services = await sql<Service[]>`
+    const servicesRows = await sql<Service[]>`
       SELECT * FROM services ORDER BY name
     `
+    const services = servicesRows as unknown as Service[]
 
     return NextResponse.json(services)
   } catch (error) {
@@ -29,11 +30,12 @@ export async function POST(request: Request) {
 
     const { name } = await request.json()
 
-    const [service] = await sql<Service[]>`
+    const serviceRows = await sql<Service[]>`
       INSERT INTO services (name)
       VALUES (${name})
       RETURNING *
     `
+    const service = (serviceRows as unknown as Service[])[0]
 
     return NextResponse.json(service)
   } catch (error) {

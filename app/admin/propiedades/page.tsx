@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 import { sql } from "@/lib/db"
 import type { PropertyWithDetails, Property } from "@/lib/types"
 import { PropertyCard } from "@/components/property-card"
@@ -12,9 +14,10 @@ async function getProperties(): Promise<PropertyWithDetails[]> {
       return []
     }
 
-    const properties = await sql<Property[]>`
+    const propertiesRows = await sql<Property[]>`
       SELECT * FROM properties ORDER BY created_at DESC
     `
+    const properties = propertiesRows as unknown as Property[]
 
     const propertiesWithDetails = await Promise.all(
       properties.map(async (property) => {

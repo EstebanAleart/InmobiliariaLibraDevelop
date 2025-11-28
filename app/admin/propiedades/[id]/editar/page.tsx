@@ -14,32 +14,40 @@ async function getProperty(id: string): Promise<PropertyWithDetails | null> {
       return null
     }
 
-    const [property] = await sql<Property[]>`
+    const propertyRows = await sql<Property[]>`
       SELECT * FROM properties WHERE id = ${id}
-    `
+    `;
+      const propertyObj = (propertyRows as unknown as Property[])[0];
+    if (!propertyObj) return null;
 
-    if (!property) {
-      return null
-    }
-
-    const rooms = await sql`
+    const roomRows = await sql`
       SELECT * FROM rooms WHERE property_id = ${id}
-    `
-    const images = await sql`
+    `;
+    const imageRows = await sql`
       SELECT * FROM property_images WHERE property_id = ${id} ORDER BY display_order
-    `
-    const services = await sql`
+    `;
+    const serviceRows = await sql`
       SELECT s.* FROM services s
       JOIN property_services ps ON s.id = ps.service_id
       WHERE ps.property_id = ${id}
-    `
+    `;
 
     return {
-      ...property,
-      rooms,
-      images,
-      services,
-    } as PropertyWithDetails
+      id: propertyObj.id,
+      title: propertyObj.title,
+      description: propertyObj.description,
+      square_meters: propertyObj.square_meters,
+      rental_price: propertyObj.rental_price,
+      expenses: propertyObj.expenses,
+      created_at: propertyObj.created_at,
+      updated_at: propertyObj.updated_at,
+      rooms: roomRows,
+      images: imageRows,
+      services: serviceRows,
+      custom_services: propertyObj.custom_services ?? [],
+    };
+
+
   } catch (error) {
     console.error("[v0] Error fetching property:", error)
     return null

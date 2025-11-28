@@ -10,9 +10,10 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     const { id } = await params
 
-    const [property] = await sql<Property[]>`
+    const propertyRows = await sql<Property[]>`
       SELECT * FROM properties WHERE id = ${id}
     `
+    const property = (propertyRows as unknown as Property[])[0]
 
     if (!property) {
       return NextResponse.json({ error: "Property not found" }, { status: 404 })
@@ -28,7 +29,15 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     `
 
     const propertyData: PropertyWithDetails = {
-      ...property,
+      id: property.id,
+      title: property.title,
+      description: property.description,
+      square_meters: property.square_meters,
+      rental_price: property.rental_price,
+      expenses: property.expenses,
+      created_at: property.created_at,
+      updated_at: property.updated_at,
+      custom_services: property.custom_services ?? [],
       rooms,
       images: [],
       services,

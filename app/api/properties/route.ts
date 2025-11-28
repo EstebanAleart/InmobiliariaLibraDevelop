@@ -9,9 +9,10 @@ export async function GET() {
       return NextResponse.json({ error: "Database not configured" }, { status: 503 })
     }
 
-    const properties = await sql<Property[]>`
+    const propertiesRows = await sql<Property[]>`
       SELECT * FROM properties ORDER BY created_at DESC
     `
+    const properties = propertiesRows as unknown as Property[]
 
     const propertiesWithDetails = await Promise.all(
       properties.map(async (property) => {
@@ -54,11 +55,12 @@ export async function POST(request: NextRequest) {
     const { title, description, square_meters, rental_price, expenses, rooms, service_ids, custom_services, images } = body
 
     // Create property
-    const [property] = await sql<Property[]>`
+    const propertyRows = await sql<Property[]>`
       INSERT INTO properties (title, description, square_meters, rental_price, expenses, custom_services)
       VALUES (${title}, ${description}, ${square_meters}, ${rental_price}, ${expenses}, ${custom_services || []})
       RETURNING *
     `
+    const property = (propertyRows as unknown as Property[])[0]
 
     // Create rooms
     if (rooms && rooms.length > 0) {
@@ -94,6 +96,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, property })
   } catch (error) {
     console.error("[v0] Error creating property:", error)
-    return NextResponse.json({ error: "Error creating property" }, { status: 500 })
+    const errorMessage = error instanceof Error ? error.message : "Unknown error"
+    return NextResponse.json({ 
+      error: "Error creating property", 
+      details: errorMessage,
+      stack: error instanceof Error ? error.stack : undefined
+    }, { status: 500 })
   }
 }
