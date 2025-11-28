@@ -1,5 +1,4 @@
-import { sql } from "@/lib/db"
-import type { PropertyWithDetails, Property } from "@/lib/types"
+import type { PropertyWithDetails } from "@/lib/types"
 import { PropertyCard } from "@/components/property-card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -7,45 +6,22 @@ import { Building2, Plus, Settings } from "lucide-react"
 
 async function getProperties(): Promise<PropertyWithDetails[]> {
   try {
-    if (!sql) {
-      console.log("Database not configured yet")
-      return []
+    // Use API endpoint instead of direct database access
+    const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL 
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+      : 'http://localhost:3000'
+    
+    const response = await fetch(`${baseUrl}/api/properties`, {
+      cache: 'no-store'
+    })
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch properties')
     }
-
-    const propertiesRows = await sql<Property[]>`
-      SELECT * FROM properties ORDER BY created_at DESC
-    `
-    const properties = propertiesRows as unknown as Property[]
-
-    const propertiesWithDetails = await Promise.all(
-      properties.map(async (property) => {
-        const rooms = await sql`
-          SELECT * FROM rooms WHERE property_id = ${property.id}
-        `
-        const images = await sql`
-          SELECT * FROM property_images WHERE property_id = ${property.id} ORDER BY display_order
-        `
-        const services = await sql`
-          SELECT s.* FROM services s
-          JOIN property_services ps ON s.id = ps.service_id
-          WHERE ps.property_id = ${property.id}
-        `
-
-        return {
-          ...property,
-          rooms,
-          images,
-          services,
-        } as PropertyWithDetails
-      }),
-    )
-
-    return propertiesWithDetails
+    
+    return await response.json()
   } catch (error) {
     console.error("[v0] Error fetching properties:", error)
-    console.log(
-      "Database connection failed. Make sure PostgreSQL is running and InmobiliariaLibra database exists.",
-    )
     return []
   }
 }
@@ -56,7 +32,7 @@ export default async function PropiedadesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card sticky top-0 z-10 backdrop-blur-sm bg-card/95">
+      <header className="border-b border-border sticky top-0 z-10 backdrop-blur-sm bg-card/95">
         <div className="container mx-auto px-4 py-3 md:py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
             <div className="flex items-center gap-2 md:gap-3 flex-1">
