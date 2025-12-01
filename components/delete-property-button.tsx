@@ -80,7 +80,7 @@ export function DeletePropertyButton({
       type="button"
       title="Eliminar propiedad"
     >
-      <Trash2 className="h-4 w-4" />
+      <Trash2 className={`h-4 w-4 ${size === 'icon' && variant === 'ghost' ? 'text-red-600' : ''}`} />
       {size !== 'icon' && 'Eliminar'}
     </Button>
   )

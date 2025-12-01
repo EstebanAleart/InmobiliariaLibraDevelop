@@ -1,6 +1,6 @@
 {
-  "/admin/estadisticas/page": "app/admin/estadisticas/page.js",
-  "/admin/page": "app/admin/page.js",
   "/admin/propiedades/page": "app/admin/propiedades/page.js",
-  "/api/services/route": "app/api/services/route.js"
+  "/page": "app/page.js",
+  "/propiedades/[id]/page": "app/propiedades/[id]/page.js",
+  "/propiedades/page": "app/propiedades/page.js"
 }

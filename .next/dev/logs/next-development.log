@@ -1,11 +1,21 @@
-[00:00:06.916] Server  LOG      ✓ Ready in 4.5s
-[00:00:15.740] Server  LOG      ○ Compiling /admin ...
-[00:00:31.344] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:31.759] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:31.759] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin","route":"/admin"}
-[00:00:31.759] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/admin color: rgb(120, 120, 120) color: inherit {"dp":"/admin","o":"http://localhost:3000/admin","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764353199599}
-[00:00:38.311] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:38.685] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
-[00:00:38.685] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/propiedades","route":"/admin/propiedades"}
-[00:00:38.685] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/admin/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/admin/propiedades","o":"http://localhost:3000/admin/propiedades","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764353206499}
-[00:00:41.562] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/admin/estadisticas color: rgb(120, 120, 120) color: inherit {"dp":"/admin/estadisticas","o":"http://localhost:3000/admin/estadisticas","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764353209405}
+[00:00:07.561] Server  LOG      ✓ Ready in 5.2s
+[00:00:30.451] Server  LOG      ○ Compiling / ...
+[00:00:45.770] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:46.401] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:00:46.401] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/propiedades","route":"/propiedades"}
+[00:00:46.401] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades","o":"http://localhost:3000/propiedades","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764597474894}
+[00:01:15.699] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/admin/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/admin/propiedades","o":"http://localhost:3000/admin/propiedades","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764597504092}
+[00:01:31.828] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:01:31.828] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/admin/propiedades","route":"/admin/propiedades"}
+[00:01:31.828] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/admin/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/admin/propiedades","o":"http://localhost:3000/admin/propiedades","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764597520259}
+[00:02:14.972] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades","o":"http://localhost:3000/propiedades","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764597563253}
+[00:04:09.603] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:04:09.603] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/propiedades","route":"/propiedades"}
+[00:04:09.603] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades","o":"http://localhost:3000/propiedades","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764597678097}
+[00:04:14.091] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:04:14.091] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/propiedades","route":"/propiedades"}
+[00:04:14.091] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades","o":"http://localhost:3000/propiedades","r":"","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764597682445}
+[00:04:25.178] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/admin/propiedades color: rgb(120, 120, 120) color: inherit {"dp":"/admin/propiedades","o":"http://localhost:3000/admin/propiedades","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764597693559}
+[00:05:18.798] Server  LOG      ✓ Compiled in 728ms
+[00:05:26.311] Server  LOG      ✓ Compiled in 540ms
+[00:06:50.743] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/propiedades/2 color: rgb(120, 120, 120) color: inherit {"dp":"/propiedades/[id]","o":"http://localhost:3000/propiedades/2","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1764597839085}

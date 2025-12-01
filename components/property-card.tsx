@@ -89,19 +89,19 @@ export function PropertyCard({ property, showActions = false }: PropertyCardProp
             <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-border">
               <div className="flex gap-2 justify-center">
                 <Link href={`/propiedades/${property.id}`}>
-                  <Button variant="default" size="icon" title="Ver propiedad">
-                    <Eye className="h-4 w-4" />
+                  <Button variant="ghost" size="icon" title="Ver propiedad">
+                    <Eye className="h-4 w-4 text-blue-600" />
                   </Button>
                 </Link>
                 <Link href={`/admin/propiedades/${property.id}/editar`}>
-                  <Button variant="outline" size="icon" title="Editar propiedad">
-                    <Edit className="h-4 w-4" />
+                  <Button variant="ghost" size="icon" title="Editar propiedad">
+                    <Edit className="h-4 w-4 text-orange-600" />
                   </Button>
                 </Link>
                 <DeletePropertyButton
                   propertyId={property.id}
                   propertyTitle={property.title}
-                  variant="destructive"
+                  variant="ghost"
                   size="icon"
                   className=""
                 />

@@ -208,7 +208,7 @@ export default async function EstadisticasPage() {
                     </p>
                   </div>
                   <div className="text-sm font-semibold">
-                    ${parseFloat(property.price).toLocaleString('es-AR')}
+                    ${property.price.toLocaleString('es-AR')}
                   </div>
                 </div>
               ))}

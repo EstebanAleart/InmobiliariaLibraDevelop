@@ -66,13 +66,13 @@ export default async function PropiedadesPage() {
               <Link href="/admin/propiedades" className="w-full sm:w-auto">
                 <Button variant="outline" className="gap-2 w-full sm:w-auto" size="sm">
                   <Settings className="h-4 w-4" />
-                  <span className="text-xs md:text-base">Vista Admin</span>
+                  <span className="hidden sm:inline">Vista Admin</span>
                 </Button>
               </Link>
               <Link href="/admin" className="w-full sm:w-auto">
                 <Button className="gap-2 w-full sm:w-auto" size="sm">
                   <Plus className="h-4 w-4" />
-                  <span className="text-xs md:text-base">Nueva Propiedad</span>
+                  <span className="hidden sm:inline">Nueva Propiedad</span>
                 </Button>
               </Link>
             </div>
