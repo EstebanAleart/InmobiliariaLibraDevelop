@@ -1,4 +1,6 @@
 {
+  "/admin/propiedades/page": "app/admin/propiedades/page.js",
+  "/page": "app/page.js",
   "/propiedades/[id]/page": "app/propiedades/[id]/page.js",
   "/propiedades/page": "app/propiedades/page.js"
 }

@@ -68,23 +68,25 @@ export default async function EditPropertyPage({
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto py-8 px-4">
-        <div className="mb-8">
-          <div className="flex items-start justify-between mb-4">
-            <Link href="/propiedades">
-              <Button variant="ghost" className="gap-2">
+      <div className="container mx-auto py-4 sm:py-6 md:py-8 px-3 sm:px-4">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row items-start justify-between mb-3 sm:mb-4 gap-3 sm:gap-0">
+            <Link href="/propiedades" className="w-full sm:w-auto">
+              <Button variant="ghost" className="gap-2 w-full sm:w-auto" size="sm">
                 <ArrowLeft className="h-4 w-4" />
-                Volver a propiedades
+                <span className="text-sm sm:text-base">Volver a propiedades</span>
               </Button>
             </Link>
             <DeletePropertyButton
               propertyId={Number(id)}
               propertyTitle={property.title}
               variant="outline"
+              size="sm"
+              className="w-full sm:w-auto"
             />
           </div>
-          <h1 className="text-4xl font-bold text-foreground mb-2">Editar Propiedad</h1>
-          <p className="text-muted-foreground">Actualiza la información de la propiedad en alquiler</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">Editar Propiedad</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Actualiza la información de la propiedad en alquiler</p>
         </div>
 
         <PropertyForm property={property} />

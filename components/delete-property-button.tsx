@@ -75,12 +75,13 @@ export function DeletePropertyButton({
     <Button
       variant={variant}
       size={size}
-      className={`gap-2 ${className}`}
+      className={`${size === 'icon' ? '' : 'gap-2'} ${className}`}
       onClick={handleDelete}
       type="button"
+      title="Eliminar propiedad"
     >
-      <Trash2 className="h-4 w-4" />
-      Eliminar
+      <Trash2 className={`h-4 w-4 ${size === 'icon' && variant === 'ghost' ? 'text-red-600' : ''}`} />
+      {size !== 'icon' && 'Eliminar'}
     </Button>
   )
 }

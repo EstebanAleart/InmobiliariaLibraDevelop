@@ -4,6 +4,9 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 })
 
+// Export the pool as db for backward compatibility
+export const db = pool
+
 // Helper function to handle template literals like Neon's sql``
 export async function sql<T = any>(
   strings: TemplateStringsArray,

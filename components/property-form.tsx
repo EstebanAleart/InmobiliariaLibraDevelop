@@ -229,12 +229,12 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Información General</CardTitle>
+          <CardTitle className="text-lg sm:text-xl">Información General</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4">
           <div>
             <Label htmlFor="title">Título</Label>
             <Input
@@ -255,7 +255,7 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             <div>
               <Label htmlFor="square_meters">Metros Cuadrados</Label>
               <Input
@@ -296,19 +296,19 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Imágenes (máximo 10)</CardTitle>
+          <CardTitle className="text-lg sm:text-xl">Imágenes (máximo 10)</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div>
               <Label htmlFor="images" className="cursor-pointer">
-                <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:bg-muted/50 transition-colors">
+                <div className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center hover:bg-muted/50 transition-colors">
                   {uploading ? (
-                    <Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" />
+                    <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin mx-auto text-muted-foreground" />
                   ) : (
                     <>
-                      <Upload className="h-8 w-8 mx-auto text-muted-foreground" />
-                      <p className="mt-2 text-sm text-muted-foreground">
+                      <Upload className="h-6 w-6 sm:h-8 sm:w-8 mx-auto text-muted-foreground" />
+                      <p className="mt-2 text-xs sm:text-sm text-muted-foreground">
                         Click para subir imágenes ({formData.images.length}/10)
                       </p>
                     </>
@@ -327,13 +327,13 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
             </div>
 
             {imagePreviews.length > 0 && (
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
                 {imagePreviews.map((preview, index) => (
                   <div key={index} className="relative group">
                     <img
                       src={preview || "/placeholder.svg"}
                       alt={`Imagen ${index + 1}`}
-                      className="w-full h-32 object-cover rounded-lg border-2 border-border"
+                      className="w-full h-24 sm:h-32 object-cover rounded-lg border-2 border-border"
                     />
                     <button
                       type="button"
@@ -352,19 +352,19 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
 
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Ambientes</CardTitle>
-            <Button type="button" onClick={addRoom} size="sm" variant="outline">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+            <CardTitle className="text-lg sm:text-xl">Ambientes</CardTitle>
+            <Button type="button" onClick={addRoom} size="sm" variant="outline" className="w-full sm:w-auto">
               <Plus className="h-4 w-4 mr-2" />
               Agregar Ambiente
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4">
           {formData.rooms.map((room, index) => (
-            <div key={index} className="border border-border rounded-lg p-4 space-y-3">
+            <div key={index} className="border border-border rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="font-medium">Ambiente {index + 1}</h4>
+                <h4 className="text-sm sm:text-base font-medium">Ambiente {index + 1}</h4>
                 {formData.rooms.length > 1 && (
                   <Button type="button" onClick={() => removeRoom(index)} size="sm" variant="ghost">
                     <X className="h-4 w-4" />
@@ -400,10 +400,10 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Servicios</CardTitle>
+          <CardTitle className="text-lg sm:text-xl">Servicios</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <CardContent className="space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             {services.map((service) => (
               <div key={service.id} className="flex items-center space-x-2">
                 <Checkbox
@@ -429,15 +429,16 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
                   handleAddService()
                 }
               }}
+              className="text-sm sm:text-base"
             />
-            <Button type="button" onClick={handleAddService} variant="outline">
+            <Button type="button" onClick={handleAddService} variant="outline" size="sm" className="shrink-0">
               <Plus className="h-4 w-4" />
             </Button>
           </div>
 
           {customServices.length > 0 && (
-            <div className="border-t pt-4">
-              <p className="text-sm text-muted-foreground mb-3">Servicios personalizados:</p>
+            <div className="border-t pt-3 sm:pt-4">
+              <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">Servicios personalizados:</p>
               <div className="flex flex-wrap gap-2">
                 {customServices.map((service, index) => (
                   <Badge key={index} variant="secondary" className="gap-2 py-2 px-3">
@@ -463,8 +464,8 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
         </CardContent>
       </Card>
 
-      <div className="flex gap-4">
-        <Button type="submit" disabled={loading} className="flex-1">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <Button type="submit" disabled={loading} className="flex-1 w-full sm:w-auto">
           {loading ? (
             <>
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -474,7 +475,7 @@ export function PropertyForm({ property, onSubmit }: PropertyFormProps) {
             <>{property ? "Actualizar" : "Crear"} Propiedad</>
           )}
         </Button>
-        <Button type="button" variant="outline" onClick={() => router.push("/admin")} disabled={loading}>
+        <Button type="button" variant="outline" onClick={() => router.push("/admin")} disabled={loading} className="w-full sm:w-auto">
           Cancelar
         </Button>
       </div>
