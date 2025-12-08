@@ -81,7 +81,7 @@ export default async function PropiedadesPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8 pt-1.5">
         {properties.length === 0 ? (
           <div className="text-center py-8 sm:py-12 md:py-20">
             <Building2 className="h-10 sm:h-12 md:h-16 w-10 sm:w-12 md:w-16 text-muted-foreground mx-auto mb-3 sm:mb-4" />
